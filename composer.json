@@ -1,0 +1,44 @@
+{
+  "name": "phact-cmf/event",
+  "description": "PSR-14 compatible event manager",
+  "keywords": ["psr14", "event", "dispatcher", "listener", "events"],
+  "homepage": "https://github.com/phact-cmf/Event",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Anton Okulov",
+      "email": "qantus@mail.ru",
+      "homepage": "https://github.com/AntonOkulov",
+      "role": "Developer"
+    },
+    {
+      "name": "Maxim Korobitsyn",
+      "email": "dog.mixer@gmain.com",
+      "homepage": "https://github.com/tsukasa-mixer",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "psr/event-dispatcher": "^1.0",
+    "psr/container": "^1.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master",
+    "phpunit/phpunit": "^8",
+    "squizlabs/php_codesniffer": "^3.5"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Phact\\Event\\": "",
+      "Tests\\": "Tests"
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  }
+}
