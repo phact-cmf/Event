@@ -75,7 +75,8 @@ class ListenerProviderTest extends TestCase
 
         $listener = function ($event) {};
 
-        $provider = new ListenerProvider(false);
+        $provider = new ListenerProvider();
+        $provider->setAnalyzeListener(false);
         $provider->addListener($listener, 100, SimpleEvent::class);
 
         $listeners = $provider->getListenersForEvent($targetEvent);
@@ -134,7 +135,7 @@ class ListenerProviderTest extends TestCase
 
         $targetEvent = new SimpleEvent();
 
-        $provider = new ListenerProvider(true, $containerMock);
+        $provider = new ListenerProvider($containerMock);
         $provider->addListener(InvokableListener::class);
 
         $listeners = $provider->getListenersForEvent($targetEvent);
@@ -161,7 +162,7 @@ class ListenerProviderTest extends TestCase
 
         $targetEvent = new SimpleEvent();
 
-        $provider = new ListenerProvider(true, $containerMock);
+        $provider = new ListenerProvider($containerMock);
         $provider->addListener('invokable');
 
         $listeners = $provider->getListenersForEvent($targetEvent);
@@ -203,7 +204,7 @@ class ListenerProviderTest extends TestCase
 
         $listener = [$methodListener, 'event'];
 
-        $provider = new ListenerProvider(true, $containerMock);
+        $provider = new ListenerProvider($containerMock);
         $provider->addListener($listener);
 
         $listeners = $provider->getListenersForEvent($targetEvent);
@@ -247,7 +248,7 @@ class ListenerProviderTest extends TestCase
 
         $listener = [MethodListener::class, 'event'];
 
-        $provider = new ListenerProvider(true, $containerMock);
+        $provider = new ListenerProvider($containerMock);
         $provider->addListener($listener);
 
         $listeners = $provider->getListenersForEvent($targetEvent);
@@ -276,7 +277,7 @@ class ListenerProviderTest extends TestCase
 
         $listener = ['listener', 'event'];
 
-        $provider = new ListenerProvider(true, $containerMock);
+        $provider = new ListenerProvider($containerMock);
         $provider->addListener($listener);
 
         $listeners = $provider->getListenersForEvent($targetEvent);
@@ -297,7 +298,7 @@ class ListenerProviderTest extends TestCase
     {
         $this->expectException(IncorrectListenerException::class);
 
-        $provider = new ListenerProvider(true, $this->createMock(ContainerInterface::class));
+        $provider = new ListenerProvider($this->createMock(ContainerInterface::class));
         $provider->addListener(123);
     }
 
@@ -314,7 +315,7 @@ class ListenerProviderTest extends TestCase
 
         $listener = ['listener', 'event'];
 
-        $provider = new ListenerProvider(true, $containerMock);
+        $provider = new ListenerProvider($containerMock);
         $provider->addListener($listener);
     }
 
@@ -322,7 +323,7 @@ class ListenerProviderTest extends TestCase
     {
         $this->expectException(IncorrectListenerException::class);
 
-        $provider = new ListenerProvider(true, $this->createMock(ContainerInterface::class));
+        $provider = new ListenerProvider($this->createMock(ContainerInterface::class));
         $provider->addListener([InvokableListener::class]);
     }
 
@@ -330,7 +331,7 @@ class ListenerProviderTest extends TestCase
     {
         $this->expectException(IncorrectListenerException::class);
 
-        $provider = new ListenerProvider(true);
+        $provider = new ListenerProvider();
         $provider->addListener([new MethodNotArgsListener(), 'event']);
     }
 
@@ -338,7 +339,7 @@ class ListenerProviderTest extends TestCase
     {
         $this->expectException(IncorrectListenerException::class);
 
-        $provider = new ListenerProvider(true);
+        $provider = new ListenerProvider();
         $provider->addListener([new MethodNotObjectListener(), 'event']);
     }
 }

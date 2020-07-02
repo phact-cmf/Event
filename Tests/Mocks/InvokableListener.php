@@ -6,6 +6,6 @@ class InvokableListener
 {
     public function __invoke(SimpleEvent $event)
     {
-        var_dump($event);
+
     }
 }

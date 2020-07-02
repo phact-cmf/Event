@@ -47,12 +47,21 @@ class ListenerProvider implements ListenerProviderInterface, ListenerAggregate
      *
      * @var bool
      */
-    protected $analyzeListener;
+    protected $analyzeListener = true;
 
-    public function __construct($analyzeListener = true, ContainerInterface $container = null)
+    public function __construct(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
+    /**
+     * Analyze or not listener with reflection
+     *
+     * @param bool $analyzeListener
+     */
+    public function setAnalyzeListener(bool $analyzeListener = true): void
     {
         $this->analyzeListener = $analyzeListener;
-        $this->container = $container;
     }
 
     /**
@@ -68,7 +77,7 @@ class ListenerProvider implements ListenerProviderInterface, ListenerAggregate
             $targetClasses[] = $this->resolveListenerTargetClass($listener);
         }
 
-        if ($eventClassName !== '' ) {
+        if ($eventClassName !== '') {
             $targetClasses[] = $eventClassName;
         }
 
@@ -157,7 +166,6 @@ class ListenerProvider implements ListenerProviderInterface, ListenerAggregate
 
     /**
      * @param ReflectionFunctionAbstract $reflection
-     *
      * @return string
      * @throws IncorrectListenerException
      */
